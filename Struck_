@@ -1,0 +1,162 @@
+
+#include <iostream>
+#include <cstdlib>
+
+#define MAX 20
+
+using namespace std;
+struct queue {
+	int data[MAX];
+	int awal, akhir;
+	int tanda;
+
+} antrean;
+
+void init(){
+	antrean.awal= -1;
+	antrean.akhir= -1;
+
+}
+
+bool full(){
+	if(antrean.akhir== MAX-1) {
+
+		return true;
+
+	} else {
+		return false;
+	}
+
+}
+
+bool empty(){
+	if(antrean.akhir == -1){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void tampilData(){
+	int i;
+
+	if(!empty()){
+			for(i=antrean.awal; i<antrean.akhir; i++){
+				cout<<antrean.data[i]<<" ";
+			}
+		}
+
+		cout<<"\n";
+	}
+
+void inQueue(){
+
+	int elemen;
+		if(!full()){
+			cout<<"Data yang akan dimasukkan : ";
+			cin>>elemen;
+			cout<<"Data berhasil ditambahkan!\n\n";
+
+			antrean.data[antrean.akhir]=elemen;
+			antrean.akhir++;
+		} else {
+			cout<<"\n Queue penuh!\n";
+		}
+	getchar();
+}
+
+
+void deQueue(){
+	int i;
+	tampilData();
+
+	if(!empty()){
+		cout<<"\nMengambil data \" "<<antrean.data[antrean.awal]<<"\" ..."<<endl;
+
+		for(i=antrean.awal; i<antrean.akhir; i++) {
+			antrean.data[i]=antrean.data[i+1];
+		}
+			antrean.akhir--;
+		} else {
+			cout<<"antrean kosong";
+		}
+
+		getchar();
+}
+
+void clear() {
+	antrean.awal = -1;
+		antrean.akhir = -1;
+	}
+
+void cari(int c){
+	int tanda = -1;
+	for(int i = 0 ;i<20;i++) {
+		if(c == antrean.data[i]) {
+			tanda = i;
+		}
+	}
+
+	if(tanda !=-1) {
+		cout<<"Selamat! data anda berada di antrean \n\n\n";
+	} else {
+	 	cout<<"Maaf! data yang anda cari tidak ada di dalam queue\n\n\n";
+	}
+}
+
+void sorting(){
+	
+}
+/*void sorting(int z){
+	int a, key, j, i;
+	for(int a=1; a<20; a++){
+		key = antrean.data[a];
+		j = a-1;
+
+		while(j >= 0 && antrean.data[j] > key){
+			antrean.data[j+1] = antrean.data[j];
+			j = j + 1;
+		}
+		antrean.data[j+1] = key;
+	}
+}
+
+void tampilSorting(int z){
+	int i;
+	for(i=0; i<20; i++){
+		cout<<antrean.data[i]<<" ";
+	}
+}*/
+
+void keluar(){
+
+}
+
+int main(){
+	int pilihan, elemen;
+	init();
+	cout<<"\n\nDemo Queue dengan Linear Array"<<endl;
+	do{
+		cout<<"\nData anda :";
+		tampilData();
+		cout<<"Menu Utama Anda!\n";
+		cout<<"==================";
+		cout<<"\n [1] Init \n [2] InQueue \n [3] Dequeue \n [4] Clear \n [5] Cari data \n [6] Click to sort! \n [7] keluar \n";
+		cout<<"==================";
+		cout<<"\nMasukkan pilihan ";cin>>pilihan;
+		switch(pilihan) {
+			case 1: init(); break;
+			case 2: inQueue(); break;
+			case 3: deQueue(); break;
+			case 4: clear(); break;
+			case 5:
+				int c;
+				cout<<"\nMasukan data yang dicari : ";
+				cin>>c;
+				cari(c);break;
+			case 6:sorting();break;
+			}
+		}
+		while(pilihan!=0);
+	return 0;
+}
