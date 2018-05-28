@@ -1,162 +1,164 @@
-
 #include <iostream>
 #include <cstdlib>
-
 #define MAX 20
 
 using namespace std;
-struct queue {
+
+struct queue{
 	int data[MAX];
 	int awal, akhir;
-	int tanda;
-
 } antrean;
 
 void init(){
-	antrean.awal= -1;
-	antrean.akhir= -1;
-
+	antrean.awal=-1;
+	antrean.akhir=-1;
 }
 
 bool full(){
-	if(antrean.akhir== MAX-1) {
-
+	if(antrean.akhir == MAX-1){
 		return true;
-
-	} else {
+	}else{
 		return false;
 	}
-
 }
 
 bool empty(){
-	if(antrean.akhir == -1){
+	if(antrean.akhir==-1){
 		return true;
-	} else {
+	}else{
 		return false;
 	}
 }
 
 void tampilData(){
 	int i;
-
 	if(!empty()){
-			for(i=antrean.awal; i<antrean.akhir; i++){
-				cout<<antrean.data[i]<<" ";
-			}
+		for(int i = antrean.awal;i<antrean.akhir; i++){
+			cout<<antrean.data[i]<<" ";
 		}
-
-		cout<<"\n";
 	}
-
-void inQueue(){
-
-	int elemen;
-		if(!full()){
-			cout<<"Data yang akan dimasukkan : ";
-			cin>>elemen;
-			cout<<"Data berhasil ditambahkan!\n\n";
-
-			antrean.data[antrean.akhir]=elemen;
-			antrean.akhir++;
-		} else {
-			cout<<"\n Queue penuh!\n";
-		}
-	getchar();
+	cout<<endl;
 }
 
+void inQueue(){
+	tampilData();
+	int elemen;
+
+	if(!full()){
+		cout<<"Data yang akan dimasukan : ";
+		cin>>elemen;
+		cout<<"Data berhasil ditambahkan\n";
+		antrean.data[antrean.akhir]=elemen;
+		antrean.akhir++;
+	}else{
+		cout<<"Queue Penuh";
+	}
+}
 
 void deQueue(){
 	int i;
 	tampilData();
-
 	if(!empty()){
-		cout<<"\nMengambil data \" "<<antrean.data[antrean.awal]<<"\" ..."<<endl;
-
-		for(i=antrean.awal; i<antrean.akhir; i++) {
+		cout<<"mengambil data "<<antrean.data[antrean.awal]<<endl;
+		for(i = antrean.awal; i<antrean.akhir; i++){
 			antrean.data[i]=antrean.data[i+1];
 		}
-			antrean.akhir--;
-		} else {
-			cout<<"antrean kosong";
-		}
-
-		getchar();
+		antrean.akhir--;
+	}else{
+		cout<<"Antrean Kosong"<<endl;
+	}
 }
 
-void clear() {
-	antrean.awal = -1;
-		antrean.akhir = -1;
-	}
+void clear(){
+	antrean.awal=-1;
+	antrean.akhir=-1;
+}
 
 void cari(int c){
-	int tanda = -1;
-	for(int i = 0 ;i<20;i++) {
-		if(c == antrean.data[i]) {
-			tanda = i;
+	bool ketemu = false;
+	int index;
+	for(int i=antrean.awal; i<antrean.akhir;i++){
+		if(c == antrean.data[i]){
+			ketemu = true;
+			index = i+2;
 		}
 	}
 
-	if(tanda !=-1) {
-		cout<<"Selamat! data anda berada di antrean \n\n\n";
-	} else {
-	 	cout<<"Maaf! data yang anda cari tidak ada di dalam queue\n\n\n";
+	if(ketemu){
+		cout<<"Data ditemukan pada antrean ke-"<<index<<endl;
+	}else{
+		cout<<"Data tidak ditemukan"<<endl;
 	}
 }
 
-void sorting(){
-	
-}
-/*void sorting(int z){
-	int a, key, j, i;
-	for(int a=1; a<20; a++){
-		key = antrean.data[a];
-		j = a-1;
+sort(){
 
-		while(j >= 0 && antrean.data[j] > key){
-			antrean.data[j+1] = antrean.data[j];
-			j = j + 1;
+}
+
+void maxMin(){
+	int number[100];
+	int jml, terbesar=number[0], terkecil=number[0];
+	for(int i=antrean.akhir;i<antrean.akhir+1;i++){
+		number[i] = antrean.data[i-1];
+	}
+	for(int i=0;i<=antrean.akhir+1;i++){
+		if(i==1){
+			terbesar = number[i];
+			terkecil = number[i];
+		} else if(terkecil < number[i]){
+			terkecil = number[i];
+		} else if (terbesar > number[i]) {
+			terbesar = number[i];
+		} else {
+			cout<<"Tidak dapat menghitung MIN / MAX. Data salah!"<<endl;
 		}
-		antrean.data[j+1] = key;
 	}
+	cout<<"Data terbesar : "<<terbesar<<endl;
+	cout<<"Data terkecil : "<<terkecil<<endl;
 }
 
-void tampilSorting(int z){
-	int i;
-	for(i=0; i<20; i++){
-		cout<<antrean.data[i]<<" ";
+void dataFinal(){
+	if(!empty()){
+		int total=0;
+		float rata;
+		int jumlah = antrean.akhir+1;
+		for (int i = antrean.awal; i < antrean.akhir+1; i++){
+			total += antrean.data[i];
+		}
+		rata = total/jumlah;
+		cout<<"Nilai total : "<<total<<endl;
+		cout<<"Rata-rata : "<<rata<<endl;
+		sort();
+		maxMin();
+	}else{
+		cout<<"Queue Kosong";
 	}
-}*/
-
-void keluar(){
-
 }
 
 int main(){
 	int pilihan, elemen;
 	init();
-	cout<<"\n\nDemo Queue dengan Linear Array"<<endl;
 	do{
-		cout<<"\nData anda :";
-		tampilData();
-		cout<<"Menu Utama Anda!\n";
-		cout<<"==================";
-		cout<<"\n [1] Init \n [2] InQueue \n [3] Dequeue \n [4] Clear \n [5] Cari data \n [6] Click to sort! \n [7] keluar \n";
-		cout<<"==================";
-		cout<<"\nMasukkan pilihan ";cin>>pilihan;
-		switch(pilihan) {
+		cout<<"\n\n\nSOURCE CODE BY : \n\t  ANANG WAHYU PRADANA \n\tUniv. AMIKOM Yogyakarta \n\t\t 2018"<<endl;
+		cout<<"\t======================="<<endl;
+		cout<<"Data anda : ";tampilData();
+		cout<<"MENU UTAMA ANDA ! "<<endl;
+		cout<<" [1] init \n [2] inQueue \n [3] deQueue \n [4] clear \n [5] search \n [6] Jml Data | Rata-Rata | Min/Max \n [0] Keluar \n";
+		cout<<"======================"<<endl;
+		cout<<"Masukkan pilihan : ";
+		cin>>pilihan;
+		cout<<"======================"<<endl;
+		switch(pilihan){
 			case 1: init(); break;
 			case 2: inQueue(); break;
 			case 3: deQueue(); break;
 			case 4: clear(); break;
 			case 5:
 				int c;
-				cout<<"\nMasukan data yang dicari : ";
+				cout<<"Masukkan data yang akan dicari : ";
 				cin>>c;
-				cari(c);break;
-			case 6:sorting();break;
-			}
+				cari(c); break;
+			case 6: dataFinal(); break;
 		}
-		while(pilihan!=0);
-	return 0;
+	}while(pilihan!=0);
 }
